@@ -17,7 +17,7 @@ Gives you full control of a post listing widget.
 With the general posts widget, you can place a list of posts into your widget areas based on any query parameters available in WP_QUERY.  You can generate the latest posts, popular posts (given you have some method of tracking post hits), post types, filter by category or other taxonomy, filter by post meta, etc...  If it's available in WP_QUERY it's available to you in the widget.  If there are customizations that the interface does not allow for, there are a number of hooks that allow you to edit and control pretty much any part of the widget from adjusting the query to adjusting the output.
 
 #### Please Note
-There is no styling associated with this plugin.  If you wish to style the output, assign a class and/or an ID to the widget and style appropriate in your style.css file.
+There is no styling associated with this plugin.  If you wish to style the output, assign a class and/or an ID to the widget and style appropriately in your style.css file.
 
 > #### Available Hooks
 > * `add_filter( 'widget_title', 'my_Func'); function my_Func($title){return $title;}`
