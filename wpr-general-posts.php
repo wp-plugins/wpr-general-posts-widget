@@ -42,10 +42,17 @@ class GardenGeneralPosts extends WP_Widget {
 		if(!$post_typed){$post_typed = 'post';}
 		if(!$post_comparison){$post_comparison = '=';}
         // getting the posts we want
+		
+		$cpage = get_query_var('paged')?get_query_var('paged'):0;
+		if(!isset($cpage) || $cpage == "" || $cpage === 0){
+			$cpage = get_query_var('page')?get_query_var('page'):1;
+		}
+		
         $qargs = array(
           'post_type'         => $post_typed,
           'posts_per_page'    => $post_amount,
-		  'post_status'       => 'publish'
+		  'post_status'       => 'publish',
+		  'paged'			  => $cpage
         );
 		if($post_catin && !$post_catout){
 			$catin = explode(",", $post_catin);
@@ -83,6 +90,10 @@ class GardenGeneralPosts extends WP_Widget {
 
 		$qargs = apply_filters('wpr_adjust_genposts_query', $qargs, $args, $instance);
         $postsQ = new WP_Query($qargs);//get_posts
+		
+		$maxpages = $postsQ->max_num_pages;
+		$totalfound = $postsQ->found_posts;
+		
         echo $before_widget;		
 			
 			$makeid = '';
@@ -143,7 +154,7 @@ class GardenGeneralPosts extends WP_Widget {
 			$closeprint .= apply_filters('wpr_genposts_addtoend', $readingon, $instance);
 			$closeprint .= '</div>';
 			
-			$finalprint = apply_filters('wpr_genposts_list_print', $openprint . $toprint . $closeprint, $openprint, $toprint, $closeprint, $instance);
+			$finalprint = apply_filters('wpr_genposts_list_print', $openprint . $toprint . $closeprint, $openprint, $toprint, $closeprint, $instance, $postsQ);
 			echo $finalprint;
 			
         echo $after_widget;	

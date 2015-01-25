@@ -28,8 +28,23 @@ There is no styling associated with this plugin.  If you wish to style the outpu
 > This filter is within the loop that prints the `<li>'s`.  `$thisprint` is the final string containing all the html including the `<li>` opening and closing tags. This filter will likely be the one used the most.  By default, this outputs the featured image (if one exists) and the title.  That's all.  In order to edit the output of the loop, you would want to edit your my_Func function to something else, utilizing the $post variable which contains all the post information (title, excerpt, content, permalink, ect...).  This is up to you to customize however you wish.  I'm sure the support area will fill up with questions in regards to outputting the lists in a certain fashion.  Most people will not read or understand this that I wrote here and many examples will likely sprout up in the support section, so stay tuned and read through those (unless you are the very first to ask for support) before posting a support question.  This plugin is free and support should not be expected.  I will have a general support license available at a later time, for all WPR plugins, but for now, don't expect, but be grateful if I do answer.  I'm usually good about it though.
 > * `add_filter('wpr_genposts_addtoend', 'my_Func'); function my_Func($readingon, $instance){return $readingon;}`
 > This filter allows you to customize the read more link that is shown after all the posts are displayed.  The final text/html is the `$readingon` variable and the `$instance` provides you with all the widget instance params you supplied in the widget interface.
-> * `apply_filters('wpr_genposts_list_print', 'my_Func'); function my_Func($finalprint, $openprint, $toprint, $closeprint, $instance){return $finalprint;}`
-> This supplies the final list with the container divs and everything else.  `$openprint` contains the opening div with the id and class supplied by the widget interface.  It also includes the openieng `<ul>` tag.  `$closeprint` contains all the closure tags for the `$openprint` as well as the readmore link/text.  `$toprint` contains everything in between (the result of the query contained in `<li>` tags).
+> * `apply_filters('wpr_genposts_list_print', 'my_Func'); function my_Func($finalprint, $openprint, $toprint, $closeprint, $instance, $wpQuery){return $finalprint;}`
+> This supplies the final list with the container divs and everything else.  `$openprint` contains the opening div with the id and class supplied by the widget interface.  It also includes the openieng `<ul>` tag.  `$closeprint` contains all the closure tags for the `$openprint` as well as the readmore link/text.  `$toprint` contains everything in between (the result of the query contained in `<li>` tags). `$wpQuery` contains the WP_Query instance, which can be used for pagination or anything else where the data provided could be useful. To add pagination, something like this would work: 
+> `function homeAddPages($finalprint, $openprint, $toprint, $closeprint, $instance, $postsQ){
+	$big = 999999999;
+	$cpage = get_query_var('paged')?get_query_var('paged'):0;
+	if(!isset($cpage) || $cpage == "" || $cpage === 0){
+		$cpage = get_query_var('page')?get_query_var('page'):1;
+	}
+	$addclose = paginate_links( array(
+		'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+		'format' => '?paged=%#%',
+		'current' => max( 1, $cpage),
+		'total' => $postsQ->max_num_pages
+	) );
+	return $openprint . $toprint . $closeprint . '<div class="hpaginator">' . $addclose . '</div>';
+}
+add_filter('wpr_genposts_list_print', 'homeAddPages', 10, 6);`
 
 
 ---
