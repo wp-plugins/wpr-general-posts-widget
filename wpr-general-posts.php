@@ -3,7 +3,7 @@
 Plugin Name: WPR General Posts
 Plugin URI: http://worldpressrevolution.com/wpr_myplugins/wpr-general-posts-widget/
 Description: Full wp_query parameters for a post listing widget.  Completely customize a post/post_type list in the widget area.  Used for latest posts, popular posts, posts by taxonomy or category, posts by meta query, whatever.
-Version: 1.0.0
+Version: 1.1.0
 Author: Aryan Duntley
 Author URI: http://worldpressrevolution.com
 License: GPLv2 or later

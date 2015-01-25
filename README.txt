@@ -7,7 +7,7 @@ Author URI: http://worldpressrevolution.com/
 Tags: posts widget,recent posts, recent post, recent posts widget, popular posts, popular posts widget, posts sidebar, sidebar post widget, custom post type widget, recent posts custom post type, newest posts, newest posts widget
 Requires at least: 3.0.1
 Tested up to: 4.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
